@@ -23,6 +23,7 @@ Vue.filter('statusGeneral',function (value) {
 
 });
 
+
 var app = new Vue({  // Cria o objeto
     el: "#app", // Informa qual o elemento que irá receber os dados
     data: {
