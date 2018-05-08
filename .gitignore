@@ -1,3 +1,5 @@
 /node_modules
 /demo
 /.idea
+.package.json
+.package-lock.json
