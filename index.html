@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue.JS</title>
+    <style type="text/css">
+        .pago {
+            color: #4dce33;
+        }
+        .nao-pago {
+            color: red;}
+
+            .red{
+                color: red;
+            }
+            .green{
+                color: green;
+            }
+        .gray{color: gray}
+        .minha-class {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body id="app">
+
+<h1>{{title}}</h1>
+<h3 :class="{'gray': status === false,'red': status > 0,'green': status === 0}">
+<p>{{ status | statusGeneral}}</p>
+</h3>
+
+<nav>
+    <ul>
+        <li v-for="o in menus">
+            <a href="##" @click.prevent="showView(o.id)">{{o.name}}</a>
+        </li>
+
+    </ul>
+</nav>
+
+
+
+<div v-if="activedView == 0 ">
+
+<table border="1" cellpadding="10">
+
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Data</th>
+        <th>Conta</th>
+        <th>Valor</th>
+        <th>Pago?</th>
+        <th>Ações</th>
+    </tr>
+    </thead><tbody>
+<tr v-for="(index,o) in bills">
+        <td>
+            {{ index +1}}
+        </td><td>{{o.date_due}}</td>
+        <td>{{o.name}}</td>
+        <td>{{o.value | currency 'R$ ' 2 }}</td>
+    <td class="minha-class" :class="{'pago':o.done, 'nao-pago': !o.done}">{{o.done | doneLabel }}</td>
+    <td>
+        <a href="#" @click.prevent="loadBill(o)">Editar</a> |
+        <a href="#" @click.prevent="deleteBill(o)">Deletar</a>
+    </td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<div v-if="activedView == 1">
+<form name="form"  @submit.prevent="submit">
+<label>Venvimento:</label>
+        <input type="text" v-model="bill.date_due">
+
+    <br><br>
+    <label>Nome:</label>
+<select v-model="bill.name">
+    <!--<option selected="selected" disabled="disabled" hidden="hidden">Selecione uma Conta...</option>-->
+<option v-for="o in names" :value="o">{{ o }}</option>
+</select>
+    <br><br>
+    <label>Valor:</label>
+    <input type="text" v-model="bill.value"><br><br>
+    <label>Pago?</label>
+    <input type="checkbox" v-model="bill.done">
+    <br><br>
+<input type="submit"  value="Salvar Conta">
+
+
+</form>
+
+</div>
+
+
+<script type="text/javascript" src="node_modules/vue/dist/vue.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+
+
+</body>
+</html>
